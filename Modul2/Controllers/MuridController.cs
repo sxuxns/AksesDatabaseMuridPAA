@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Modul2.Models;
 using System;
 
@@ -18,6 +19,14 @@ namespace Modul2.Controllers
 
         [HttpGet("api/murid")]
         public ActionResult<Murid> ListMurid()
+        {
+            MuridContext context = new MuridContext(this.__constr);
+            List<Murid> ListMurid = context.ListMurid();
+            return Ok(ListMurid);
+        }
+
+        [HttpPost("api/murid_auth"), Authorize]
+        public ActionResult<Murid> ListMuridWithAuth()
         {
             MuridContext context = new MuridContext(this.__constr);
             List<Murid> ListMurid = context.ListMurid();
